@@ -4,8 +4,7 @@ import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import { dark } from '@clerk/themes';
-import { ClerkProvider } from '@clerk/nextjs';
+import { Providers } from '@/components/providers';
 const spaceGrotesk = Space_Grotesk({
         variable: '--font-space-grotesk',
         subsets: ['latin'],
@@ -28,24 +27,11 @@ export default function RootLayout({
         children: React.ReactNode;
 }>) {
         return (
-                <ClerkProvider
-                        appearance={{
-                                baseTheme: dark,
-                        }}
-                >
-                        <html lang="en" suppressHydrationWarning>
-                                <body className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}>
-                                        <ThemeProvider
-                                                attribute="class"
-                                                defaultTheme="dark"
-                                                enableSystem
-                                                disableTransitionOnChange
-                                        >
-                                                {children}
-                                        </ThemeProvider>
-                                        <Toaster />
-                                </body>
-                        </html>
-                </ClerkProvider>
+                <html lang="en" suppressHydrationWarning>
+                        <body className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}>
+                                <Providers>{children}</Providers>
+                                <Toaster />
+                        </body>
+                </html>
         );
 }
