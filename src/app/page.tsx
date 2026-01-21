@@ -1,5 +1,8 @@
-import Image from 'next/image';
+import { ProjectsView } from '@/features/projects/components/projects-view';
 
-export default function Home() {
-        return <div className="text-2xl font-bold">Test 214</div>;
+
+const Home = () => {
+        return <ProjectsView />;
 }
+
+export default Home;
