@@ -2,6 +2,7 @@
 import { useMutation, useQuery } from "convex/react"
 import { api } from "../../../../convex/_generated/api"
 import { Id } from "../../../../convex/_generated/dataModel"
+import { Project } from "next/dist/build/swc/types"
 
 
 
@@ -11,6 +12,10 @@ export const useGetProjects = () => {
 
 export const useGetPartialProjects = (limit: number) => {
         return useQuery(api.projects.getPartial, { limit })
+}
+
+export const useGetProjectById = (projectId: Id<'projects'>) => {
+        return useQuery(api.projects.getById, { projectId })
 }
 
 export const useCreateProject = () => {
@@ -30,4 +35,26 @@ export const useCreateProject = () => {
                         localStore.setQuery(api.projects.get, {}, [...existingProjects, newProject]);
                 }
         })
-}       
+}
+
+export const useRenameProject = (projectId: Id<'projects'>) => {
+        return useMutation(api.projects.rename).withOptimisticUpdate((localStore, args) => {
+                const existingProject = localStore.getQuery(api.projects.getById, { projectId });
+                if (existingProject !== undefined && existingProject !== null) {
+                        localStore.setQuery(api.projects.getById, { projectId }, {
+                                ...existingProject,
+                                name: args.name,
+                                updatedAt: Date.now(),
+                        });
+                }
+
+                const existingProjects = localStore.getQuery(api.projects.get);
+                if (existingProjects !== undefined) {
+                        localStore.setQuery(api.projects.get, {}, existingProjects.map(project => project._id === args.projectId ? {
+                                ...project,
+                                name: args.name,
+                                updatedAt: Date.now(),
+                        } : project));
+                }
+        })
+}

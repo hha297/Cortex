@@ -3,7 +3,6 @@ import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
 import { Providers } from '@/components/providers';
 const spaceGrotesk = Space_Grotesk({
         variable: '--font-space-grotesk',

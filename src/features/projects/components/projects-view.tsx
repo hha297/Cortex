@@ -34,7 +34,7 @@ export const ProjectsView = () => {
                                         <div className="flex justify-between gap-4 w-full items-center">
                                                 <div className="flex items-center gap-2 w-full group/logo">
                                                         <Image src="/logo.svg" alt="Cortex" width={32} height={32} className='md:size-12' />
-                                                        <h1 className={cn("text-3xl md:text-5xl font-bold font-mono pb-2", "group-hover/logo:text-primary")}>Cortex</h1>
+                                                        <h1 className={cn("text-3xl md:text-5xl font-bold font-mono", "group-hover/logo:text-primary")}>Cortex</h1>
                                                 </div>
                                         </div>
                                         <div className='flex flex-col gap-4 w-full'>
