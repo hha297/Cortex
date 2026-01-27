@@ -20,6 +20,7 @@ import { TreeItemWrapper } from "./tree-item-wrapper";
 import { Doc, Id } from "../../../../../convex/_generated/dataModel";
 import { getItemPadding } from "./constants";
 import { RenameInput } from "./rename-input";
+import { useEditor } from "@/features/editor/hooks/use-editor";
 
 export const Tree = ({
         item,
@@ -39,7 +40,7 @@ export const Tree = ({
         const createFile = useCreateFile();
         const createFolder = useCreateFolder();
 
-
+        const { openFile, closeTab, activeTabId, closeAllTabs, setActiveTab } = useEditor(projectId);
 
         const folderContents = useFolderContents({
                 projectId,
@@ -83,7 +84,7 @@ export const Tree = ({
 
         if (item.type === "file") {
                 const fileName = item.name;
-                const isActive = true;
+                const isActive = activeTabId === item._id;
 
                 if (isRenaming) {
                         return (
@@ -102,10 +103,15 @@ export const Tree = ({
                                 item={item}
                                 level={level}
                                 isActive={isActive}
-                                onClick={() => { }}
-                                onDoubleClick={() => { }}
+                                onClick={() => {
+                                        openFile(item._id, { pinned: false });
+                                }}
+                                onDoubleClick={() => {
+                                        openFile(item._id, { pinned: true });
+                                }}
                                 onRename={() => setIsRenaming(true)}
                                 onDelete={() => {
+                                        closeTab(item._id);
                                         deleteFile({ fileId: item._id })
                                 }}
                         >
