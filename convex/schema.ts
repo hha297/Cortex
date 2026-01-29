@@ -8,7 +8,7 @@ export default defineSchema({
                 importStatus: v.optional(v.union(v.literal('importing'), v.literal('completed'), v.literal('failed'))),
                 exportStatus: v.optional(v.union(v.literal('exporting'), v.literal('completed'), v.literal('failed'), v.literal('cancelled'))),
                 exportUrl: v.optional(v.string()),
-                updatedAt: v.number()
+                updatedAt: v.number(),
         }).index('by_owner', ['ownerId']),
 
         files: defineTable({
@@ -18,6 +18,24 @@ export default defineSchema({
                 type: v.union(v.literal('file'), v.literal('folder')),
                 content: v.optional(v.string()), // Text file only
                 storageId: v.optional(v.id('_storage')),
-                updatedAt: v.number()
-        }).index('by_project', ['projectId']).index('by_parent', ['parentId']).index('by_project_parent', ['projectId', 'parentId']),
+                updatedAt: v.number(),
+        })
+                .index('by_project', ['projectId'])
+                .index('by_parent', ['parentId'])
+                .index('by_project_parent', ['projectId', 'parentId']),
+        conversations: defineTable({
+                projectId: v.id('projects'),
+                title: v.string(),
+                updatedAt: v.number(),
+        }).index('by_project', ['projectId']),
+
+        messages: defineTable({
+                conversationId: v.id('conversations'),
+                projectId: v.id('projects'),
+                role: v.union(v.literal('user'), v.literal('assistant')),
+                content: v.string(),
+                status: v.optional(v.union(v.literal('processing'), v.literal('completed'), v.literal('cancelled'))),
+        })
+                .index('by_conversation', ['conversationId'])
+                .index('by_project_status', ['projectId', 'status']),
 });
