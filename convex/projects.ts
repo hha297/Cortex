@@ -1,7 +1,6 @@
-import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
-import { verifyAuth } from "./auth";
-
+import { v } from 'convex/values';
+import { mutation, query } from './_generated/server';
+import { verifyAuth } from './auth';
 
 export const create = mutation({
         args: {
@@ -15,7 +14,7 @@ export const create = mutation({
                         updatedAt: Date.now(),
                 });
                 return projectId;
-        }
+        },
 });
 
 export const getPartial = query({
@@ -25,16 +24,24 @@ export const getPartial = query({
         handler: async (ctx, args) => {
                 const identity = await verifyAuth(ctx);
 
-                return await ctx.db.query('projects').withIndex('by_owner', q => q.eq('ownerId', identity.subject)).order('desc').take(args.limit);
-        }
+                return await ctx.db
+                        .query('projects')
+                        .withIndex('by_owner', (q) => q.eq('ownerId', identity.subject))
+                        .order('desc')
+                        .take(args.limit);
+        },
 });
 
 export const get = query({
         args: {},
         handler: async (ctx) => {
                 const identity = await verifyAuth(ctx);
-                return await ctx.db.query('projects').withIndex('by_owner', q => q.eq('ownerId', identity.subject)).order('desc').collect();
-        }
+                return await ctx.db
+                        .query('projects')
+                        .withIndex('by_owner', (q) => q.eq('ownerId', identity.subject))
+                        .order('desc')
+                        .collect();
+        },
 });
 
 export const getById = query({
@@ -52,7 +59,7 @@ export const getById = query({
                         throw new Error('Unauthorized');
                 }
                 return project;
-        }
+        },
 });
 
 export const rename = mutation({
@@ -74,5 +81,33 @@ export const rename = mutation({
                         updatedAt: Date.now(),
                 });
                 return project;
-        }
+        },
+});
+
+export const updateSettings = mutation({
+        args: {
+                id: v.id('projects'),
+                settings: v.object({
+                        installCommand: v.optional(v.string()),
+                        devCommand: v.optional(v.string()),
+                }),
+        },
+        handler: async (ctx, args) => {
+                const identity = await verifyAuth(ctx);
+
+                const project = await ctx.db.get('projects', args.id);
+
+                if (!project) {
+                        throw new Error('Project not found');
+                }
+
+                if (project.ownerId !== identity.subject) {
+                        throw new Error('Unauthorized to update this project');
+                }
+
+                await ctx.db.patch('projects', args.id, {
+                        settings: args.settings,
+                        updatedAt: Date.now(),
+                });
+        },
 });
