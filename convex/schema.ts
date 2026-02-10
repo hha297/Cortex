@@ -7,7 +7,7 @@ export default defineSchema({
                 ownerId: v.string(),
                 importStatus: v.optional(v.union(v.literal('importing'), v.literal('completed'), v.literal('failed'))),
                 exportStatus: v.optional(v.union(v.literal('exporting'), v.literal('completed'), v.literal('failed'), v.literal('cancelled'))),
-                exportUrl: v.optional(v.string()),
+                exportRepoUrl: v.optional(v.string()),
                 settings: v.optional(
                         v.object({
                                 installCommand: v.optional(v.string()),
