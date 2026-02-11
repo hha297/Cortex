@@ -16,7 +16,7 @@ import { formatDistanceToNow } from "date-fns";
 
 export const Navbar = ({ projectId }: { projectId: Id<'projects'> }) => {
         const project = useGetProjectById(projectId);
-        const renameProject = useRenameProject(projectId);
+        const renameProject = useRenameProject();
 
         const [isRenaming, setIsRenaming] = useState(false);
         const [name, setName] = useState('');

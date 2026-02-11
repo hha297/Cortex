@@ -52,6 +52,16 @@ export const ImportGithubDialog = ({ open, onOpenChange }: ImportGithubDialogPro
                         } catch (error) {
                                 if (error instanceof HTTPError) {
                                         const body = await error.response.json<{ error: string }>();
+                                        if (body.error?.includes("Pro plan required")) {
+                                                toast.error("Upgrade to import repositories", {
+                                                        action: {
+                                                                label: "Upgrade",
+                                                                onClick: () => openUserProfile(),
+                                                        },
+                                                });
+                                                onOpenChange(false);
+                                                return;
+                                        }
                                         if (body?.error?.includes('GitHub not connected')) {
                                                 toast.error('GitHub account not connected', {
                                                         action: {
