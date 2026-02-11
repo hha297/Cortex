@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -89,8 +90,8 @@ const LineSpan = ({
     {keyedLine.tokens.length === 0
       ? "\n"
       : keyedLine.tokens.map(({ token, key }) => (
-          <TokenSpan key={key} token={token} />
-        ))}
+        <TokenSpan key={key} token={token} />
+      ))}
   </span>
 );
 
@@ -157,11 +158,11 @@ const createRawTokens = (code: string): TokenizedCode => ({
     line === ""
       ? []
       : [
-          {
-            content: line,
-            color: "inherit",
-          } as ThemedToken,
-        ]
+        {
+          content: line,
+          color: "inherit",
+        } as ThemedToken,
+      ]
   ),
   fg: "inherit",
   bg: "transparent",
@@ -205,8 +206,8 @@ export function highlightCode(
 
       const tokenized: TokenizedCode = {
         tokens: result.tokens,
-        fg: result.fg,
-        bg: result.bg,
+        fg: result.fg ?? "inherit",
+        bg: result.bg ?? "transparent",
       };
 
       // Cache the result
@@ -243,6 +244,7 @@ const LINE_NUMBER_CLASSES = cn(
   "before:select-none"
 );
 
+// eslint-disable-next-line react/display-name
 const CodeBlockBody = memo(
   ({
     tokenized,
