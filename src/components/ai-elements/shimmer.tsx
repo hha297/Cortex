@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable react-hooks/static-components */
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import {
