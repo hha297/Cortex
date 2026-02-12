@@ -156,29 +156,29 @@ INNGEST_SIGNING_KEY=your-signing-key
 cortex/
 ├── src/
 │   ├── app/                    # Next.js app router
-│   │   ├── api/               # API routes
-│   │   │   ├── github/        # GitHub import/export endpoints
-│   │   │   ├── inngest/       # Inngest webhook handler
-│   │   │   ├── messages/      # Message API endpoints
-│   │   │   ├── projects/      # Project management endpoints
-│   │   │   └── quick-edit/   # Quick edit API
+│   │   ├── api/                # API routes
+│   │   │   ├── github/         # GitHub import/export endpoints
+│   │   │   ├── inngest/        # Inngest webhook handler
+│   │   │   ├── messages/       # Message API endpoints
+│   │   │   ├── projects/       # Project management endpoints
+│   │   │   └── quick-edit/     # Quick edit API
 │   │   └── ...
-│   ├── features/              # Feature-based organization
-│   │   ├── conversations/    # Chat/conversation features
-│   │   ├── editor/           # Code editor components
-│   │   ├── preview/          # WebContainer preview
-│   │   └── projects/         # Project management
-│   ├── components/           # Shared UI components
-│   ├── lib/                  # Utility functions
-│   └── hooks/                # Shared React hooks
-├── convex/                   # Convex backend
-│   ├── schema.ts            # Database schema
-│   ├── projects.ts          # Project mutations/queries
-│   ├── files.ts             # File operations
-│   └── conversations.ts     # Conversation logic
-├── inngest/                 # Inngest functions
-│   └── functions/           # Background job functions
-└── public/                  # Static assets
+│   ├── features/               # Feature-based organization
+│   │   ├── conversations/      # Chat/conversation features
+│   │   ├── editor/             # Code editor components
+│   │   ├── preview/            # WebContainer preview
+│   │   └── projects/           # Project management
+│   ├── components/             # Shared UI components
+│   ├── lib/                    # Utility functions
+│   └── hooks/                  # Shared React hooks
+├── convex/                     # Convex backend
+│   ├── schema.ts               # Database schema
+│   ├── projects.ts             # Project mutations/queries
+│   ├── files.ts                # File operations
+│   └── conversations.ts        # Conversation logic
+├── inngest/                    # Inngest functions
+│   └── functions/              # Background job functions
+└── public/                     # Static assets
 ```
 
 ## Development
@@ -290,10 +290,6 @@ This is a standard Next.js application and can be deployed to:
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-[Add your license here]
 
 ## Support
 
